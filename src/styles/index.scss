@@ -1,3 +1,88 @@
+$font-family: Arial, sans-serif;
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 body {
   margin: 0;
+  @include center;
+}
+
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+  padding: $calendar-padding;
+  width: calc(($day-size + $gap) * $columns - $gap);
+  position: relative;
+
+  &__day {
+    width: $day-size;
+    height: $day-size;
+    background-color: $default-bg;
+    border: $border-width solid $border-color;
+    position: relative;
+    font-family: $font-family;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition:
+      transform $transition-duration,
+      background-color $transition-duration;
+    cursor: default;
+
+    &:hover {
+      background-color: $hover-color;
+      transform: translateY(-20px);
+      cursor: pointer;
+    }
+
+    &::before {
+      content: '';
+      font-size: $font-size;
+      color: $text-color;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+
+
+  @for $i from 1 through 31 {
+    &__day:nth-child(#{$i})::before {
+      content: '#{$i}';
+    }
+  }
+
+
+
+  @for $i from 28 through 30 {
+    &--month-length_#{$i} &__day:nth-child(#{ $i + 1 }) {
+      display: none;
+    }
+  }
+
+  
+
+  $days: (
+    sun: 0,
+    mon: 1,
+    tue: 2,
+    wed: 3,
+    thu: 4,
+    fri: 5,
+    sat: 6,
+  );
+
+  @each $day, $index in $days {
+    &--start-day_#{$day} &__day:nth-child(1) {
+      margin-left: calc(($day-size + $gap) * $index);
+    }
+  }
 }
