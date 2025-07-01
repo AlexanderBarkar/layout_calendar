@@ -1,5 +1,14 @@
+$day-size: 100px;
+$border-width: 1px;
+$gap: 1px;
+$calendar-padding: 10px;
+$hover-color: #ffbfcb;
+$default-bg: #eee;
+$border-color: #000;
+$text-color: #000;
+$font-size: 30px;
+$transition-duration: 0.5s;
 $font-family: Arial, sans-serif;
-
 
 @mixin center {
   display: flex;
@@ -10,6 +19,7 @@ $font-family: Arial, sans-serif;
 
 body {
   margin: 0;
+
   @include center;
 }
 
